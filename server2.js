@@ -103,5 +103,5 @@ app.post("/api/login", async (req, res) => {
   res.json({ message: "Login erfolgreich!", token });
 });
 
-const PORT = process.env.PORT || 4500;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server läuft auf Port ${PORT}`));
