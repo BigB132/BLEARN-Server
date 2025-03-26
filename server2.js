@@ -1,107 +1,99 @@
-require("dotenv").config();
 const express = require("express");
+const cors = require("cors");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const cors = require("cors");
 const nodemailer = require("nodemailer");
 
+const {dbURI} = require("../BLEARN-Server/config.json")
+
 const app = express();
-app.use(express.json());
-app.use(cors()); // Erlaubt CORS für den Client
+app.use(cors()); // CORS aktivieren
+app.use(express.json()); // JSON Body Parser
 
-// 📌 MongoDB Verbindung
-mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("✅ MongoDB verbunden"))
-  .catch((err) => console.log("❌ MongoDB Fehler:", err));
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log("Datenbank verbunden"))
+    .catch(err => console.log("Fehler bei der Datenbankverbindung", err));
 
-// 📌 User Schema
-const User = mongoose.model(
-  "User",
-  new mongoose.Schema({
-    email: { type: String, unique: true, required: true },
-    password: { type: String, required: true },
-    isVerified: { type: Boolean, default: false },
-    emailToken: { type: String },
-  })
-);
+// User Model
+const User = mongoose.model("User", new mongoose.Schema({
+    username: String,
+    email: { type: String, unique: true },
+    password: String
+}));
 
-// 📌 Mailer-Setup (SMTP)
-const transporter = nodemailer.createTransport({
-  service: "Gmail",
-  auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
+// Registrierung Route
+app.post("/api/auth/register", async (req, res) => {
+    const { username, email, password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({ username, email, password: hashedPassword });
+
+
+    try {
+        await newUser.save();
+        res.status(201).json({ msg: "Benutzer registriert!" });
+    } catch (err) {
+        res.status(400).json({ msg: "Fehler bei der Registrierung" });
+    }
+
+    // Erstelle ein JWT-Token für die Verifizierung
+    const token = jwt.sign({ email }, "banana", { expiresIn: "1h" });
+
+    const verificationLink = `http://localhost:3000/verify-email?token=${token}`;
+
+    // E-Mail senden
+    const mailjet = require ('node-mailjet')
+        .connect("2f74cf55d61d7b701b4aee56a22398f5", "86321f7ce70a736e1457347e716953f9")
+    const request = mailjet
+        .post("send", {'version': 'v3.1'})
+        .request({
+            "Messages":[
+                {
+                    "From": {
+                        "Email": "hanzfranzdermaster@gmail.com",
+                        "Name": "Hanz Franz"
+                    },
+                    "To": [
+                        {
+                            "Email": email,
+                            "Name": "User"
+                        }
+                    ],
+                    "Subject": "Blearn Email Verification",
+                    "TextPart": "Hey User! Click here to verify your email.",
+                    "HTMLPart": "<text>Hey User! Click <a href=\"https://google.com/\">here</a> to verify your email.</text>"
+                }
+            ]
+        })
+    request
+        .then((result) => {
+            console.log(result.body)
+        })
+        .catch((err) => {
+            console.log(err.statusCode)
+        })
 });
 
-// 📌 Registrierung mit E-Mail-Verifikation
-app.post("/api/register", async (req, res) => {
-  const { email, password } = req.body;
+// Login Route
+app.post("/api/auth/login", async (req, res) => {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
 
-  const hashedPassword = await bcrypt.hash(password, 10);
-  const emailToken = jwt.sign({ email }, process.env.JWT_SECRET, {
-    expiresIn: "1d",
-  });
+    if (!user) {
+        return res.status(400).json({ msg: "Benutzer nicht gefunden!" });
+    }
 
-  try {
-    const user = new User({ email, password: hashedPassword, emailToken });
-    await user.save();
+    const validPassword = await bcrypt.compare(password, user.password);
+    if (!validPassword) {
+        return res.status(400).json({ msg: "Falsches Passwort!" });
+    }
 
-    const verifyLink = `${process.env.FRONTEND_URL}/verify-email.html?token=${emailToken}`;
-    await transporter.sendMail({
-      to: email,
-      subject: "Verifiziere deine E-Mail",
-      html: `<h2>Willkommen!</h2><p>Klicke <a href="${verifyLink}">hier</a>, um dein Konto zu verifizieren.</p>`,
-    });
-
-    res.json({ message: "Überprüfe deine E-Mail zur Verifikation!" });
-  } catch (err) {
-    res.status(400).json({ message: "E-Mail existiert bereits!" });
-  }
+    const token = jwt.sign({ userId: user._id }, "banana", { expiresIn: "1h" });
+    res.json({ msg: "Login erfolgreich", token });
 });
 
-// 📌 E-Mail-Verifikation
-app.get("/api/verify-email", async (req, res) => {
-  const { token } = req.query;
-
-  try {
-    const { email } = jwt.verify(token, process.env.JWT_SECRET);
-    await User.findOneAndUpdate(
-      { email },
-      { isVerified: true, emailToken: null }
-    );
-    res.json({
-      message: "E-Mail verifiziert! Du kannst dich jetzt einloggen.",
-    });
-  } catch {
-    res
-      .status(400)
-      .json({ message: "Ungültiger oder abgelaufener Verifikationslink." });
-  }
-});
-
-// 📌 Login mit Verifikations-Check
-app.post("/api/login", async (req, res) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ email });
-
-  if (!user)
-    return res.status(400).json({ message: "E-Mail nicht registriert." });
-  if (!user.isVerified)
-    return res
-      .status(403)
-      .json({ message: "Bitte verifiziere zuerst deine E-Mail." });
-
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) return res.status(400).json({ message: "Falsches Passwort." });
-
-  const token = jwt.sign({ email }, process.env.JWT_SECRET, {
-    expiresIn: "1h",
-  });
-  res.json({ message: "Login erfolgreich!", token });
-});
-
+// Server starten
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server läuft auf Port ${PORT}`));
+app.listen(PORT, () => {
+    console.log(`Server läuft auf Port ${PORT}`);
+});

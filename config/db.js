@@ -1,9 +1,9 @@
-const {dbURI} = require("../config.json")
 const mongoose = require("mongoose");
+const User = require("../models/User");
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
+    await mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
     console.log("✅ MongoDB verbunden");
   } catch (err) {
     console.error("❌ MongoDB Verbindung fehlgeschlagen:", err);
