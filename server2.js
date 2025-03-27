@@ -77,7 +77,7 @@ const User = mongoose.model("User", new mongoose.Schema({
 app.post("/api/auth/login", async (req, res) => {
     const { email } = req.body;
     const user = await User.findOne({ email });
-    const mailToken = Math.floor(1000 + Math.random() * 10000);
+    const mailToken = Math.floor(1000 + Math.random() * 9000);
 
     if (!user) {
         const newUser = new User({
@@ -85,7 +85,10 @@ app.post("/api/auth/login", async (req, res) => {
             mailToken: mailToken,
         });
         await newUser.save();
-    };
+    } else {
+        user.mailToken = mailToken;
+        await user.save();
+    }
 
     const request = mailjet
         .post("send", {'version': 'v3.1'})
@@ -125,6 +128,20 @@ app.post("/api/auth/login", async (req, res) => {
     const token = jwt.sign({ userId: email }, "banana", { expiresIn: "1h" });
     res.json({ msg: "Login erfolgreich", token });
 });
+
+app.post("/api/auth/verify", async (req, res) => {
+    const { email, mailToken } = req.body;
+    const user = await User.findOne({ email });
+
+    if(!user) return res.status(400).json({msg: "No user"});
+    if(Number(user.mailToken) !== Number(mailToken)) return res.status(400).json({msg: `Wrong token: ${user.mailToken}/${mailToken}`});
+
+    // JWT für den Benutzer erstellen
+    const token = jwt.sign({ userId: mailToken }, "banana", { expiresIn: "1h" });
+
+    res.json({ msg: "success", token });
+});
+
 
 // Server starten
 const PORT = process.env.PORT || 5000;
