@@ -18,7 +18,8 @@
     "env": "^0.0.2",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
+    "mailjet": "^0.0.1",
     "mongoose": "^8.13.0",
-    "node-mailjet": "^6.0.8"
+    "node-mailjet": "3.1"
   }
 }
