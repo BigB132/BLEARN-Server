@@ -4,9 +4,9 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const mailjet = require ('node-mailjet').connect("2f74cf55d61d7b701b4aee56a22398f5", "86321f7ce70a736e1457347e716953f9");
-const User = require("../BLEARN-Server/userModel");
+const User = require("./userModel");
 
-const {dbURI} = require("../BLEARN-Server/config.json")
+const {dbURI} = require("./config.json")
 
 const app = express();
 app.use(cors()); // CORS aktivieren
@@ -97,7 +97,14 @@ app.post("/api/auth/checktoken", async (req, res) => {
     } else {
         res.json({ msg: "fail"})
     };
-})
+});
+
+app.get('/earn/:randomId', (req, res) => {
+    const randomId = req.params.randomId;
+    // Hier kannst du die Coins berechnen und dem Benutzer anzeigen
+    res.send(`<h1>Du hast 10 Coins für das Besuchen dieser Seite verdient!</h1><p>ID: ${randomId}</p>`);
+    console.log("Bannaa");
+});
 
 // Server starten
 const PORT = process.env.PORT || 5000;
