@@ -115,7 +115,7 @@ app.post("/api/auth/checktoken", async (req, res) => {
     };
 });
 
-app.get('/earn/:randomId', (req, res) => {
+app.get('/earn/:randomId', async (req, res) => {
     const randomId = req.params.randomId;
     const user = await User.findOne(randomId);
     if(!user) return;
