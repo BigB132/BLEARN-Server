@@ -101,7 +101,7 @@ app.post("/api/auth/verify", async (req, res) => {
 });
 
 app.post("/api/auth/checktoken", async (req, res) => {
-    const { token, email, coinCode } = req.body;
+    const { token, email, coincode } = req.body;
 
     const user = await User.findOne({token: token, email: email});
     if(user){
@@ -115,21 +115,14 @@ app.post("/api/auth/checktoken", async (req, res) => {
     };
 });
 
-app.post("/api/earncoins", async (req, res) => {
-    const {token, email, code} = req.body;
-
-    const user = await User.findOne({token: token, email: email});
-    if(!user) return;
-
-    user.coinCode = code;
-    await user.save();
-});
-
 app.get('/earn/:randomId', (req, res) => {
     const randomId = req.params.randomId;
-    // Hier kannst du die Coins berechnen und dem Benutzer anzeigen
-    res.send(`<h1>Du hast 10 Coins für das Besuchen dieser Seite verdient!</h1><p>ID: ${randomId}</p>`);
-    console.log("Bannaa");
+    const user = await User.findOne(randomId);
+    if(!user) return;
+    user.coinCode = "0";
+    user.coins += 10;
+    user.save();
+    res.json({msg: "success"});
 });
 
 // Server starten
