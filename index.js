@@ -101,10 +101,14 @@ app.post("/api/auth/verify", async (req, res) => {
 });
 
 app.post("/api/auth/checktoken", async (req, res) => {
-    const { token, email } = req.body;
+    const { token, email, coinCode } = req.body;
 
     const user = await User.findOne({token: token, email: email});
     if(user){
+        if(coinCode){
+            user.coinCode = coinCode;
+            await user.save();
+        };
         res.json({msg: "success", coins: user.coins})
     } else {
         res.json({ msg: "fail"})
