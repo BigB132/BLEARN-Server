@@ -119,7 +119,7 @@ app.post("/api/earncoins", async (req, res) => {
 
     user.coinCode = code;
     await user.save();
-}
+});
 
 app.get('/earn/:randomId', (req, res) => {
     const randomId = req.params.randomId;

@@ -6,9 +6,7 @@ async function migrate() {
     await mongoose.connect(dbURI, {});
     console.log("Connected successfully to database!");
     
-    //await User.updateMany({ coins: { $exists: false } }, { $set: { coins: 0 } });
-    const users = await User.collection.listIndexes('test.users');
-    console.log(users)
+    await User.updateMany({ coinCode: { $exists: false } }, { $set: { coinCode: 0 } });
 
 };
 
