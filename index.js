@@ -105,8 +105,8 @@ app.post("/api/auth/checktoken", async (req, res) => {
 
     const user = await User.findOne({token: token, email: email});
     if(user){
-        if(coinCode){
-            user.coinCode = coinCode;
+        if(coincode){
+            user.coinCode = coincode;
             await user.save();
         };
         res.json({msg: "success", coins: user.coins})
