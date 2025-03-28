@@ -111,6 +111,16 @@ app.post("/api/auth/checktoken", async (req, res) => {
     };
 });
 
+app.post("/api/earncoins", async (req, res) => {
+    const {token, email, code} = req.body;
+
+    const user = await User.findOne({token: token, email: email});
+    if(!user) return;
+
+    user.coinCode = code;
+    await user.save();
+}
+
 app.get('/earn/:randomId', (req, res) => {
     const randomId = req.params.randomId;
     // Hier kannst du die Coins berechnen und dem Benutzer anzeigen
