@@ -79,9 +79,22 @@ app.post("/api/auth/verify", async (req, res) => {
 
     if(!user) return res.status(400).json({msg: "No user"});
     if(Number(user.mailToken) !== Number(mailToken)) return res.status(400).json({msg: `Wrong token: ${user.mailToken}/${mailToken}`});
+    
+    function generateToken(length = 25) {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:,.<>?';
+        let token = '';
+    
+        for (let i = 0; i < length; i++) {
+            const randomIndex = Math.floor(Math.random() * characters.length);
+            token += characters[randomIndex];
+        }
 
-    // JWT für den Benutzer erstellen
-    const token = jwt.sign({ userId: email }, "banana", { expiresIn: "1h" });
+        console.log(`Created Token: ${email}:${token}`);
+        return token;
+    }
+
+    const token = generateToken();
+    
     user.token = token;
     await user.save()
 
