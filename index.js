@@ -117,7 +117,7 @@ app.post("/api/auth/checktoken", async (req, res) => {
 
 app.get('/earn/:randomId', async (req, res) => {
     const coincode = req.params.randomId;
-    const user = await User.findOne({ coinCode: coincode});
+    const user = await User.findOne({ coinCode: coincode });
     if (!user) return res.status(404).send('User not found' + coincode);
 
     res.send(`
@@ -182,11 +182,12 @@ app.get('/earn/:randomId', async (req, res) => {
             </div>
             <p id="message"></p>
             <script>
+                const coincode = "${coincode}"; // Die Variable außerhalb des Fetch-Calls setzen
                 async function claimReward() {
-                    const response = await fetch('https://blearn-server.onrender.com/claim/`${coincode}`, {
+                    const response = await fetch(\`https://blearn-server.onrender.com/claim/\${coincode}\`, {
                         method: 'POST',
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ coincode: "`${coincode}`" })
+                        body: JSON.stringify({ coincode: coincode })
                     });
                     const data = await response.json();
                     if (data.msg === "success") {
@@ -203,6 +204,7 @@ app.get('/earn/:randomId', async (req, res) => {
         </html>
     `);
 });
+
 app.post('/claim/:randomId', async (req, res) => {
     const {coincode} = req.body;
     const user = await User.findOne({ coinCode: coincode });
