@@ -146,7 +146,7 @@ app.get('/earn/:randomId', async (req, res) => {
 });
 
 app.post('/claim/:randomId', async (req, res) => {
-    const coincode = req.params.randomId;
+    const {coincode} = req.body;
     const user = await User.findOne({ coinCode: coincode });
     if (!user) return res.json({ msg: "User not found" });
 
