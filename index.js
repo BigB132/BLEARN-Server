@@ -117,7 +117,7 @@ app.post("/api/auth/checktoken", async (req, res) => {
 
 app.get('/earn/:randomId', async (req, res) => {
     const {token, email, coincode} = req.params.randomId;
-    const user = await User.findOne({ coinCode: randomId, token: token, email: email });
+    const user = await User.findOne({ coinCode: coincode, token: token, email: email });
     if (!user) return res.status(404).send('User not found');
 
     res.send(`
