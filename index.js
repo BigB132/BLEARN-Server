@@ -132,12 +132,12 @@ app.get('/earn/:randomId', async (req, res) => {
                 <script>
                     async function claimReward() {
                         const response = await fetch('https://blearn-server.onrender.com/claim/${coincode}', { 
-                            method: 'POST'
+                            method: 'POST',
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({ coincode: "${coincode}" })
                         });
                         const data = await response.json();
-                        if(data.msg === "success) {
+                        if(data.msg === "success") {
                             window.location.href = "https://blearn-latein.glitch.me";
                         }
                     }
