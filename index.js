@@ -116,14 +116,47 @@ app.post("/api/auth/checktoken", async (req, res) => {
 });
 
 app.get('/earn/:randomId', async (req, res) => {
-    const randomId = req.params.randomId;
-    const user = await User.findOne({coinCode: randomId});
-    if(!user) return;
-    user.coinCode = "0";
-    user.coins += 10;
-    user.save();
-    res.json({msg: "success"});
+    const {token, email, coincode} = req.params.randomId;
+    const user = await User.findOne({ coinCode: randomId, token: token, email: email });
+    if (!user) return res.status(404).send('User not found');
+
+    res.send(`
+        <html>
+            <head>
+                <title>Earn Coins</title>
+            </head>
+            <body>
+                <h1>Klicke den Button, um deine Belohnung zu erhalten!</h1>
+                <button onclick="claimReward()">Belohnung erhalten</button>
+                <p id="message"></p>
+                <script>
+                    async function claimReward() {
+                        const response = await fetch('https://blearn-server.onrender.com/claim/${randomId}', { 
+                            method: 'POST'
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ token: token, email: email, coincode: coincode })
+                        });
+                        const data = await response.json();
+                        document.getElementById("message").innerText = data.msg;
+                    }
+                </script>
+            </body>
+        </html>
+    `);
 });
+
+app.post('/claim/:randomId', async (req, res) => {
+    const {token, email, coincode} = req.params.randomId;
+    const user = await User.findOne({ coinCode: coincode, token: token, email: email });
+    if (!user) return res.json({ msg: "User not found" });
+
+    user.coinCode = "0"; // Deaktiviere den Code nach der Nutzung
+    user.coins += 10;
+    await user.save();
+
+    res.json({ msg: "Belohnung erfolgreich erhalten!" });
+});
+
 
 // Server starten
 const PORT = process.env.PORT || 5000;
