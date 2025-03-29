@@ -77,7 +77,7 @@ app.post("/api/auth/verify", async (req, res) => {
     const user = await User.findOne({ email });
 
     if(!user) return res.status(400).json({msg: "No user"});
-    if(Number(user.mailToken) !== Number(mailToken)) return res.status(400).json({msg: `Wrong token: ${user.mailToken}/${mailToken}`});
+    if(Number(user.mailToken) !== Number(mailToken)) return res.status(400).json({msg: `fail`});
     
     function generateToken(length = 25) {
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:,.<>?';
