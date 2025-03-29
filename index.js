@@ -134,10 +134,12 @@ app.get('/earn/:randomId', async (req, res) => {
                         const response = await fetch('https://blearn-server.onrender.com/claim/${coincode}', { 
                             method: 'POST'
                             headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ coincode: ${coincode} })
+                            body: JSON.stringify({ coincode: "${coincode}" })
                         });
                         const data = await response.json();
-                        document.getElementById("message").innerText = data.msg;
+                        if(data.msg === "success) {
+                            window.location.href = "https://blearn-latein.glitch.me";
+                        }
                     }
                 </script>
             </body>
@@ -154,7 +156,7 @@ app.post('/claim/:randomId', async (req, res) => {
     user.coins += 10;
     await user.save();
 
-    res.json({ msg: "Belohnung erfolgreich erhalten!" });
+    res.json({ msg: "success" });
 });
 
 
