@@ -111,7 +111,7 @@ app.post("/api/auth/checktoken", async (req, res) => {
         };
         res.json({msg: "success", coins: user.coins})
     } else {
-        res.json({ msg: "Falscher Code"})
+        res.json({ msg: "fail"})
     };
 });
 
