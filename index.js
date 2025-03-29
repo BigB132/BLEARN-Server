@@ -131,7 +131,7 @@ app.get('/earn/:randomId', async (req, res) => {
                 <p id="message"></p>
                 <script>
                     async function claimReward() {
-                        const response = await fetch('https://blearn-server.onrender.com/claim/${randomId}', { 
+                        const response = await fetch('https://blearn-server.onrender.com/claim/${coincode}', { 
                             method: 'POST'
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({ token: token, email: email, coincode: coincode })
