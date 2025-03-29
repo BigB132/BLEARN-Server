@@ -134,7 +134,7 @@ app.get('/earn/:randomId', async (req, res) => {
                         const response = await fetch('https://blearn-server.onrender.com/claim/${coincode}', { 
                             method: 'POST'
                             headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ token: token, email: email, coincode: coincode })
+                            body: JSON.stringify({ coincode: coincode })
                         });
                         const data = await response.json();
                         document.getElementById("message").innerText = data.msg;
@@ -146,8 +146,8 @@ app.get('/earn/:randomId', async (req, res) => {
 });
 
 app.post('/claim/:randomId', async (req, res) => {
-    const {token, email, coincode} = req.params.randomId;
-    const user = await User.findOne({ coinCode: coincode, token: token, email: email });
+    const coincode = req.params.randomId;
+    const user = await User.findOne({ coinCode: coincode });
     if (!user) return res.json({ msg: "User not found" });
 
     user.coinCode = "0"; // Deaktiviere den Code nach der Nutzung
