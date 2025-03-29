@@ -121,32 +121,88 @@ app.get('/earn/:randomId', async (req, res) => {
     if (!user) return res.status(404).send('User not found' + coincode);
 
     res.send(`
-        <html>
-            <head>
-                <title>Earn Coins</title>
-            </head>
-            <body>
-                <h1>Klicke den Button, um deine Belohnung zu erhalten!</h1>
-                <button onclick="claimReward()">Belohnung erhalten</button>
-                <p id="message"></p>
-                <script>
-                    async function claimReward() {
-                        const response = await fetch('https://blearn-server.onrender.com/claim/${coincode}', { 
-                            method: 'POST',
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ coincode: "${coincode}" })
-                        });
-                        const data = await response.json();
-                        if(data.msg === "success") {
-                            window.location.href = "https://blearn-latein.glitch.me";
-                        }
+        <!DOCTYPE html>
+        <html lang="de">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Earn Coins</title>
+            <style>
+                body {
+                    margin: 0;
+                    font-family: Arial, sans-serif;
+                    background-color: #181818;
+                    color: white;
+                    text-align: center;
+                }
+                .header {
+                    padding: 50px 20px;
+                }
+                .header h1 {
+                    font-size: 48px;
+                    margin-bottom: 10px;
+                }
+                .header p {
+                    font-size: 20px;
+                    max-width: 800px;
+                    margin: 0 auto;
+                }
+                .btn-container {
+                    margin-top: 30px;
+                }
+                .btn {
+                    display: inline-block;
+                    padding: 12px 24px;
+                    font-size: 18px;
+                    color: white;
+                    text-decoration: none;
+                    background-color: #c200cc;
+                    border-radius: 8px;
+                    transition: background 0.3s, box-shadow 0.3s;
+                    cursor: pointer;
+                    border: none;
+                }
+                .btn:hover {
+                    background: #a000aa;
+                    box-shadow: 0 0 15px #c200cc;
+                }
+                #message {
+                    margin-top: 20px;
+                    font-size: 18px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>BLEARN</h1>
+                <p>Klicke den Button, um deine Belohnung zu erhalten!</p>
+            </div>
+            <div class="btn-container">
+                <button class="btn" onclick="claimReward()">Belohnung erhalten</button>
+            </div>
+            <p id="message"></p>
+            <script>
+                async function claimReward() {
+                    const response = await fetch('https://blearn-server.onrender.com/claim/`${coincode}`, {
+                        method: 'POST',
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ coincode: "`${coincode}`" })
+                    });
+                    const data = await response.json();
+                    if (data.msg === "success") {
+                        document.getElementById("message").innerText = "Belohnung erfolgreich eingelöst!";
+                        setTimeout(() => {
+                            window.location.href = "https://blearn.netlify.app";
+                        }, 1500);
+                    } else {
+                        document.getElementById("message").innerText = "Fehler beim Einlösen. Versuche es erneut.";
                     }
-                </script>
-            </body>
+                }
+            </script>
+        </body>
         </html>
     `);
 });
-
 app.post('/claim/:randomId', async (req, res) => {
     const {coincode} = req.body;
     const user = await User.findOne({ coinCode: coincode });
