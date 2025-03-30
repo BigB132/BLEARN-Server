@@ -231,8 +231,11 @@ app.post('/claim/:randomId', async (req, res) => {
     res.json({ msg: "success" });
 });
 
-app.post('/api/shop/buy', async (req, res) => {
-    const {token, email, module, pack } = req.body;
+app.get('/api/shop/buy/:module/:pack', async (req, res) => {
+    const module = req.params.module;
+    const pack = req.params.pack;
+    const { token, email } = req.query;
+    
     console.log(token)
     console.log(email)
     console.log(module)
