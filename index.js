@@ -9,7 +9,14 @@ const Modules = require("./moduleDataModel");
 const {dbURI} = require("./config.json")
 
 const app = express();
-app.use(cors()); // CORS aktivieren
+
+const corsOptions = {
+    origin: "*", // Alternativ eine spezifische Domain angeben, z. B. "https://meinfrontend.com"
+    methods: "GET,POST,PUT,DELETE",
+    allowedHeaders: "Content-Type,Authorization"
+};
+app.use(cors(corsOptions));
+
 app.use(express.json()); // JSON Body Parser
 
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -224,7 +231,7 @@ app.post('/api/shop/buy', async (req, res) => {
     console.log(email)
     console.log(module)
     console.log(pack)
-    
+
     const user = await User.findOne({token: token, email: email});
     if(!user) {
         res.json({msg: "NoUser"});
