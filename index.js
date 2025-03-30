@@ -278,7 +278,18 @@ app.get('/api/shop/buy/:module/:pack', async (req, res) => {
 
         await user.save();
 
-        res.json({msg: "success"});
+        res.send(`
+            <!DOCTYPE html>
+            <html lang="de">
+            <head></head>
+            <body>
+            <script>
+                window.onload = async function() {
+                    window.location.href = 'blearn.netlify.app/dashboard';
+                }
+            </script>
+            </body>
+            </html>`)
     }
 })
 
