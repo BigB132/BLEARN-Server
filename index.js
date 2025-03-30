@@ -119,7 +119,7 @@ app.post("/api/auth/checktoken", async (req, res) => {
 app.get('/earn/:randomId', async (req, res) => {
     const coincode = req.params.randomId;
     const user = await User.findOne({ coinCode: coincode });
-    if (!user) return res.status(404).send('User not found' + coincode);
+    if (!user) return res.status(404).send('User not found: ' + coincode);
 
     res.send(`
         <!DOCTYPE html>
@@ -227,7 +227,11 @@ app.post('/api/shop/buy', async (req, res) => {
     }
     const packId = Number(pack);
     const coins = user.coins;
-    const moduleData = await Modules.findOne({id: module})
+    const moduleData = await Modules.findOne({id: module});
+    if(!moduleData){
+        res.json({msg: "NoModule"});
+        return;
+    }
     const price = moduleData.packs[packId];
     if(price > coins){
         res.json({msg: "NEC"});
