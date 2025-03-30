@@ -11,11 +11,17 @@ const {dbURI} = require("./config.json")
 const app = express();
 
 const corsOptions = {
-    origin: "*", // Alternativ eine spezifische Domain angeben, z. B. "https://meinfrontend.com"
+    origin: "*", // Alternativ eine spezifische Domain angeben
     methods: "GET,POST,PUT,DELETE",
     allowedHeaders: "Content-Type,Authorization"
 };
+
+// CORS aktivieren
 app.use(cors(corsOptions));
+
+// Preflight-Anfragen explizit erlauben
+app.options("*", cors(corsOptions));
+
 
 app.use(express.json()); // JSON Body Parser
 
