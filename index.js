@@ -221,6 +221,10 @@ app.post('/claim/:randomId', async (req, res) => {
 app.post('/api/shop/buy', async (req, res) => {
     const {token, email, module, pack } = req.body;
     const user = await User.findOne({token: token, email: email});
+    if(!user) {
+        res.json({msg: "NoUser"});
+        return;
+    }
     const packId = Number(pack);
     const coins = user.coins;
     const moduleData = await Modules.findOne({id: module})
