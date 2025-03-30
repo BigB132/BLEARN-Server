@@ -285,7 +285,7 @@ app.get('/api/shop/buy/:module/:pack', async (req, res) => {
             <body>
             <script>
                 window.onload = async function() {
-                    window.location.href = 'blearn.netlify.app/dashboard';
+                    window.location.href = 'https://blearn.netlify.app/dashboard';
                 }
             </script>
             </body>
