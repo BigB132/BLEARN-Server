@@ -6,6 +6,8 @@ const User = mongoose.model("User", new mongoose.Schema({
     token: {type: String},
     coins: {type: Number, default: 0},
     coinCode: {type: String, default: 0},
+    modules: {type: [String], default: []},
+    moduleTimes: {type: [String], default: []},
 }));
 
 module.exports = ("User", User);

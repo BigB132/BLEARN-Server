@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const mailjet = require ('node-mailjet').connect("2f74cf55d61d7b701b4aee56a22398f5", "86321f7ce70a736e1457347e716953f9");
 const User = require("./userModel");
+const Modules = require("./moduleDataModel");
 
 const {dbURI} = require("./config.json")
 
@@ -216,6 +217,32 @@ app.post('/claim/:randomId', async (req, res) => {
 
     res.json({ msg: "success" });
 });
+
+app.post('/api/shop/buy', async (req, res) => {
+    const {token, email, module, pack } = req.body;
+    const user = await User.findOne({token: token, email: email});
+    const packId = Number(pack);
+    const coins = user.coins;
+    const moduleData = await Modules.findOne({id: module})
+    const price = moduleData.packs[packId];
+    if(price > coins){
+        res.json({msg: "NEC"});
+        return;
+    } else {
+        user.coins -= price;
+        user.modules.push(module);
+        if(packId === 0) user.moduleTimes.push(Date.now() + 30 * 60 * 1000);
+        if(packId === 1) user.moduleTimes.push(Date.now() + 60 * 60 * 1000);
+        if(packId === 2) user.moduleTimes.push(Date.now() + 4 * 60 * 60 * 1000);
+        if(packId === 3) user.moduleTimes.push(Date.now() + 24 * 60 * 60 * 1000);
+        if(packId === 4) user.moduleTimes.push(Date.now() + 7 * 24 * 60 * 60 * 1000);
+        if(packId === 5) user.moduleTimes.push(Date.now() + 28 * 24 * 60 * 60 * 1000);
+
+        await user.save();
+
+        res.json({msg: "success"});
+    }
+})
 
 
 // Server starten
