@@ -220,6 +220,11 @@ app.post('/claim/:randomId', async (req, res) => {
 
 app.post('/api/shop/buy', async (req, res) => {
     const {token, email, module, pack } = req.body;
+    console.log(token)
+    console.log(email)
+    console.log(module)
+    console.log(pack)
+    
     const user = await User.findOne({token: token, email: email});
     if(!user) {
         res.json({msg: "NoUser"});
