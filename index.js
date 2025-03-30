@@ -94,7 +94,7 @@ app.post("/api/auth/verify", async (req, res) => {
     if(Number(user.mailToken) !== Number(mailToken)) return res.status(400).json({msg: `fail`});
     
     function generateToken(length = 25) {
-        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{}|;:,.<>?';
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         let token = '';
     
         for (let i = 0; i < length; i++) {
@@ -235,7 +235,7 @@ app.get('/api/shop/buy/:module/:pack', async (req, res) => {
     const module = req.params.module;
     const pack = req.params.pack;
     const { token, email } = req.query;
-    
+
     console.log(token)
     console.log(email)
     console.log(module)
