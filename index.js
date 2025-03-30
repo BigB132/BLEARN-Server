@@ -233,6 +233,15 @@ app.post('/api/shop/buy', async (req, res) => {
         return;
     }
     const price = moduleData.packs[packId];
+
+    console.log("User:", user);
+    console.log("ModuleData:", moduleData);
+    console.log("Packs:", moduleData.packs);
+    console.log("PackId:", packId);
+    console.log("Price:", price);
+    console.log("Coins:", coins);
+
+
     if(price > coins){
         res.json({msg: "NEC"});
         return;
