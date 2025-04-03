@@ -238,11 +238,6 @@ app.get('/api/shop/buy/:module/:pack', async (req, res) => {
     const pack = req.params.pack;
     const { token, email } = req.query;
 
-    console.log(token)
-    console.log(email)
-    console.log(module)
-    console.log(pack)
-
     const user = await User.findOne({token: token, email: email});
     if(!user) {
         res.json({msg: "NoUser"});
@@ -256,14 +251,6 @@ app.get('/api/shop/buy/:module/:pack', async (req, res) => {
         return;
     }
     const price = moduleData.packs[packId];
-
-    console.log("User:", user);
-    console.log("ModuleData:", moduleData);
-    console.log("Packs:", moduleData.packs);
-    console.log("PackId:", packId);
-    console.log("Price:", price);
-    console.log("Coins:", coins);
-
 
     if(price > coins){
         res.json({msg: "NEC"});
