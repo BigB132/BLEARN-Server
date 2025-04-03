@@ -5,6 +5,8 @@ const jwt = require("jsonwebtoken");
 const mailjet = require ('node-mailjet').connect("2f74cf55d61d7b701b4aee56a22398f5", "86321f7ce70a736e1457347e716953f9");
 const User = require("./userModel");
 const Modules = require("./moduleDataModel");
+require('./docsCode.js');
+
 
 const {dbURI} = require("./config.json")
 
