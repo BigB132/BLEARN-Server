@@ -632,9 +632,9 @@ app.get('/api/documentation/structure', (req, res) => {
 app.get('/api/documentation/content/:sectionId/:email/:token', async (req, res) => {
   const { sectionId, email, token } = req.params;
 
-  const user = await User.findOne({email: email, token: token});
+  const user = await User.findOne({email: email, token: token, modules: sectionId});
 
-  const index = objekte.findIndex(obj => obj.value === sectionId);
+  const index = user.modules.indexOf(sectionId);
 
   if(user.moduleTimes[index] < Date.now() || !user){
     if (contentData[sectionId]) {
