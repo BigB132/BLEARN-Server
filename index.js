@@ -623,7 +623,7 @@ app.get('/api/documentation/content/:sectionId/:email/:token', async (req, res) 
 
   const index = user.modules.indexOf(sectionId);
 
-  if(user.moduleTimes[index] < Date.now() || !user){
+  if(user.moduleTimes[index] > Date.now() || !user){
     if (contentData[sectionId]) {
       res.json({ content: contentData[sectionId] });
     } else {
