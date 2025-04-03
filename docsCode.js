@@ -425,8 +425,3 @@ app.get('/api/documentation/search', (req, res) => {
   
   res.json(results);
 });
-
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Documentation API server running on port ${PORT}`);
-});
