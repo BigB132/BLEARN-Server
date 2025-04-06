@@ -317,22 +317,15 @@ const documentationData = {
       name: 'Latein',
       subcategories: [
         {
-          id: 'core-api',
-          name: 'Core API',
+          id: 'l1',
+          name: 'Einführung',
           chapters: [
-            { id: 'core-api-authentication', name: 'Authentication' },
-            { id: 'core-api-requests', name: 'Requests & Responses' },
-            { id: 'core-api-errors', name: 'Error Handling' }
+            { id: 'l1.1', name: 'Satzglieder, Wortarten, Formen' },
+            { id: 'l1.2', name: 'Akkusative und Deklinationen' },
+            { id: 'l1.3', name: 'Das Genus' },
+            { id: 'l1.4', name: 'Konjugieren'}
           ]
         },
-        {
-          id: 'advanced-api',
-          name: 'Advanced API',
-          chapters: [
-            { id: 'advanced-api-batching', name: 'Request Batching' },
-            { id: 'advanced-api-webhooks', name: 'Webhooks' }
-          ]
-        }
       ]
     },
   ]
@@ -378,235 +371,235 @@ const contentData = {
     </div>
   `,
   
-  'quick-start': `
-    <h1 class="doc-title">Quick Start Guide</h1>
-    <div class="doc-content">
-      <p>Get up and running with our library in minutes.</p>
-      
-      <h3 id="quick-start-hello-world">Hello World Example</h3>
-      <p>Here's a simple example to get you started:</p>
-      <pre><code>const ourPackage = require('our-package');
+  'l1': `
+      <h1 class="doc-title">Einführung</h1>
+          <div class="doc-content">
+            <h3 id="l1.1">
+              Satzglieder, Wortarten, Formen
+            </h3>
+            <span style="color: #037cff">Puella </span
+            ><span style="color: #e20000">cantat</span>. -
+            <span style="color: #037cff">Das Mädchen </span
+            ><span style="color: #e20000">singt</span>.
+            <p>
+              <br />Dies ist der erste lateinische Satz den du hier lernst.
+              „Puella“ heißt „Mädchen“ und „cantat“ heißt „singt“.
+            </p>
+            <p>
+              Was fällt dir auf? Im Lateinischen gibt es keine Artikel (der,
+              die, das)!
+            </p>
+            <span style="color: #037cff">Puella </span>ist in diesem Satz ein
+            <span style="color: #037cff">Substantiv</span>, also das
+            Hauptwort.<span style="color: #e20000">Cantat </span>ist ein
+            <span style="color: #e20000">Verb</span>.
+            <p><br /></p>
+            <p>
+              <b>Satzglieder:</b> In dem Satz gibt es zwei Satzglieder: Das
+              Mädchen | singt.
+            </p>
+            <span style="color: #037cff">Das Mädchen </span>ist ein Subjekt. Das
+            Subjekt ist eines der wichtigsten Satzglieder. Es beschreibt wer
+            oder was handelt. Man erfragt es mit „Wer oder was tut etwas?“.
+            <p>Ein Satzglied kann aus einem oder mehreren Wörtern bestehen.</p>
+            <p><br /></p>
+            <span style="color: #e20000">singt </span>ist ein Prädikat. Es sagt
+            aus, was das Subjekt (Das Mädchen) tut. Man erfragt es mit „Was tut
+            das Mädchen?“. Du musst natürlich das Mädchen mit dem Subjekt
+            ersetzen.
+            <p><br /></p>
+            <p>
+              Ein Satzglied kann aus einem oder mehreren Wörtern bestehen. Ein
+              Satz besteht mindestens aus einem Subjekt und Prädikat.
+            </p>
+            <p></p>
+            <p>
+              <b>Formen:</b> Das Substantiv
+              <span style="color: #037cff">Puella </span>steht im Nominativ.
+              Dieser ist einer von fünf Fällen. Dazu später aber mehr. Da
+              <span style="color: #e20000">cantat </span>ein Verb ist, hat es
+              keinen Kasus.
+            </p>
+            <h3 id="l1.2">
+              Akkusative und Deklinationen
+            </h3>
+            <span style="color: #006fff">Servus </span
+            ><span style="color: #fff000">epuum </span
+            ><span style="color: #e20000">videt</span>. -
+            <span style="color: #006fff">Der Sklave </span
+            ><span style="color: #e20000">sieht </span
+            ><span style="color: #fff000">das Pferd</span>.
+            <p>
+              In diesem Satz gibt es diesmal drei Satzglieder: Servus | equum |
+              videt.
+            </p>
+            <span style="color: #006fff">Servus</span>: Ist ein Subjekt wie wir
+            es bereis oben gelernt haben.<br /><br /><span
+              style="color: #fff000"
+              >Equum</span
+            >: Ist ein neuer Kasus. Der „Akkusativ“. Das Akkusativobjekt im Satz
+            ist dazu da, die Handlung, also was der Sklave tut näher zu
+            beschreiben. Anstatt zu sagen, dass der Sklave sieht, kann man mit
+            dem Akkusativobjekt beschreiben, was der Sklave sieht, also das
+            Pferd.<br /><br /><span style="color: #e20000">Videt</span>: Ist das
+            Prädikat, welches wir schon weiter oben kennengelernt haben.<br />
+            <p>
+              Man erkennt das Akkusativobjekt an seiner eigenen Endung. Die
+              Grundform ist „Equus“, aber der Akkusativ von Equus ist „Equum“.
+              Ausserdem gehört „Equus“ in die o-Deklination. Deklinationen sind
+              Gruppen von Wörtern. Es gibt die o-Dekl, die a-Dekl, und die
+              konsonantische Deklination. Die Endungen sind bei allen innerhalb
+              der Gruppen/Deklinationen gleich. Du kannst die Endungen aus
+              dieser Tabelle entnehmen:
+            </p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Kasus</th>
+                  <th>o-Dekl.</th>
+                  <th>a-Dekl.</th>
+                  <th>kons.-Dekl.</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>Nominativ</th>
+                  <td>equ-<b>us</b></td>
+                  <td>puell-<b>a</b></td>
+                  <td>pater</td>
+                </tr>
+                <tr>
+                  <th>Akkusativ</th>
+                  <td>equ-<b>um</b></td>
+                  <td>puell-<b>am</b></td>
+                  <td>patr-<b>em</b></td>
+                </tr>
+              </tbody>
+            </table>
+            <h3 id="l1.3">Das Genus</h3>
+            <p>
+              Neben den Denkinationen kann man ein Nomen auch einem bestimmten
+              Geschlecht zuordnen.
+            </p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Wort</th>
+                  <th>Geschlecht</th>
+                  <th>Übersetzung</th>
+                  <th>Erklärung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>equus</td>
+                  <td>m.</td>
+                  <td>das Pferd</td>
+                  <td>m. = Maskulinum</td>
+                </tr>
+                <tr>
+                  <td>puella</td>
+                  <td>f.</td>
+                  <td>das Mädchen</td>
+                  <td>f. = Femininum</td>
+                </tr>
+                <tr>
+                  <td>templum</td>
+                  <td>n.</td>
+                  <td>der Tempel</td>
+                  <td>n. = Neutrum</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>
+              Das Geschlecht muss man einfach (genauso wie die Übersetzung) mit
+              lernen. Manchmal stimmt es mit dem Deutschen Geschlecht überein,
+              aber leider nicht immer.
+            </p>
+            <h3 id="l1.4">Konjugieren</h3>
+            <p>
+              Konjugieren ist ähnlich wie das Deklinieren, nur dass man hier mit
+              Verben arbeitet. Auch Verben haben unterschiedliche Endungen, die
+              man lernen muss. In den obigen zwei Sätzen handelt es sich um die
+              <b>3. Person Singular Präsens</b>. Diese endet immer auf „-t“
+            </p>
+            <p>
+              Allerdings kann man nicht einfach ein -t hintendran hängen,
+              sondern gibt es auch beim Konjugieren (genauso wie beim
+              Deklinieren) Gruppen. Diese muss man mit lernen, oder man kann sie
+              auch an den Endungen ihreres Stammes erkennen:
+            </p>
+            <p>- a-Konj.: rogat</p>
+            <p>- e-Konj.: videt</p>
+            <p>- i-Konj.: audit</p>
+            <p>- kons.-Konj: quaerit</p>
+            <p>
+              Du kannst die Endungen aus der untenstehenden Tabelle entnehmen:
+            </p>
+            <table>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>a-Konj.</th>
+                  <th>e-Konj.</th>
+                  <th>i-Konj.</th>
+                  <th>kons.-Konj.</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>3. Person Singular</th>
+                  <td>roga-<b>t</b></td>
+                  <td>vide-<b>t</b></td>
+                  <td>audi-<b>t</b></td>
+                  <td>quaer-<b>i</b>-<b>t</b></td>
+                </tr>
+              </tbody>
+            </table>
+            <p>
+              Das „-i-“ bei quaerit ist ein Bindevokal. Es erleichtert die
+              Aussprache des Wortes.
+            </p>
+            <p>
+              Achtung: Deklinieren und konjugieren sind zwei komplett
+              unterschiedliche Dinge. Deklinieren tut man mit Nomen, und
+              konjugieren mit Verben!
+            </p>
+            <p>Jetzt können wir den Satz von oben vollständig bestimmen!</p>
 
-// Initialize with your API key
-const client = new ourPackage.Client('YOUR_API_KEY');
-
-// Make your first request
-client.sendRequest('Hello, World!')
-  .then(response => {
-    console.log('Response:', response);
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });</code></pre>
-      
-      <h3 id="quick-start-basic-concepts">Basic Concepts</h3>
-      <p>Before diving deeper, it's important to understand these core concepts:</p>
-      <ul>
-        <li><strong>Client</strong>: The main entry point for the API</li>
-        <li><strong>Requests</strong>: How you communicate with our services</li>
-        <li><strong>Callbacks</strong>: How you handle responses</li>
-        <li><strong>Error handling</strong>: How to deal with problems</li>
-      </ul>
-    </div>
-  `,
-  
-  'core-api': `
-    <h1 class="doc-title">Core API</h1>
-    <div class="doc-content">
-      <p>Documentation for the core functionality of our API.</p>
-      
-      <h3 id="core-api-authentication">Authentication</h3>
-      <p>All API requests require authentication using API keys. Here's how to authenticate:</p>
-      <pre><code>const client = new ourPackage.Client({
-  apiKey: 'YOUR_API_KEY',
-  environment: 'production' // or 'sandbox' for testing
-});</code></pre>
-      <p>Keep your API keys secure and never expose them in client-side code.</p>
-      
-      <h3 id="core-api-requests">Requests & Responses</h3>
-      <p>The basic request structure follows this pattern:</p>
-      <pre><code>client.resource.action(parameters)
-  .then(response => {
-    // Handle successful response
-  })
-  .catch(error => {
-    // Handle error
-  });</code></pre>
-      <p>For example, to get a user by ID:</p>
-      <pre><code>client.users.get({ id: 'user_123' })
-  .then(user => {
-    console.log(user.name);
-  });</code></pre>
-      
-      <h3 id="core-api-errors">Error Handling</h3>
-      <p>Our API returns standard error objects with the following structure:</p>
-      <pre><code>{
-  "code": "error_code",
-  "message": "Human-readable error message",
-  "details": { /* Additional error details */ }
-}</code></pre>
-      <p>Common error codes include:</p>
-      <ul>
-        <li><code>authentication_error</code>: Invalid API key</li>
-        <li><code>validation_error</code>: Invalid request parameters</li>
-        <li><code>not_found</code>: Requested resource not found</li>
-        <li><code>rate_limited</code>: Too many requests</li>
-      </ul>
-    </div>
-  `,
-  
-  'advanced-api': `
-    <h1 class="doc-title">Advanced API</h1>
-    <div class="doc-content">
-      <p>Advanced features for power users.</p>
-      
-      <h3 id="advanced-api-batching">Request Batching</h3>
-      <p>For efficiency, you can batch multiple operations into a single API request:</p>
-      <pre><code>const batch = client.createBatch();
-
-batch.add(client.users.get({ id: 'user_1' }));
-batch.add(client.users.get({ id: 'user_2' }));
-batch.add(client.products.list({ category: 'books' }));
-
-batch.execute()
-  .then(results => {
-    // results[0] = user_1 data
-    // results[1] = user_2 data
-    // results[2] = products list
-  });</code></pre>
-      
-      <h3 id="advanced-api-webhooks">Webhooks</h3>
-      <p>Set up webhooks to receive real-time updates:</p>
-      <pre><code>client.webhooks.create({
-  url: 'https://your-server.com/webhook',
-  events: ['user.created', 'user.updated'],
-  secret: 'your_webhook_secret'
-});</code></pre>
-      <p>Always verify webhook signatures:</p>
-      <pre><code>const isValid = client.webhooks.verifySignature(
-  requestBody,
-  signatureHeader,
-  'your_webhook_secret'
-);</code></pre>
-    </div>
-  `,
-  
-  'beginner-tutorials': `
-    <h1 class="doc-title">Beginner Tutorials</h1>
-    <div class="doc-content">
-      <p>Step-by-step guides for beginners.</p>
-      
-      <h3 id="beginner-first-app">Building Your First App</h3>
-      <p>This tutorial walks you through creating a complete application:</p>
-      <ol>
-        <li>Setting up your development environment</li>
-        <li>Installing the necessary packages</li>
-        <li>Creating your first project</li>
-        <li>Implementing basic features</li>
-        <li>Testing your application</li>
-      </ol>
-      <p>Sample code for a minimal app:</p>
-      <pre><code>const express = require('express');
-const ourPackage = require('our-package');
-
-const app = express();
-const client = new ourPackage.Client('YOUR_API_KEY');
-
-app.get('/api/data', async (req, res) => {
-  try {
-    const data = await client.data.get();
-    res.json(data);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-app.listen(3000, () => {
-  console.log('Server running on port 3000');
-});</code></pre>
-      
-      <h3 id="beginner-auth">Authentication Tutorial</h3>
-      <p>Learn how to implement user authentication:</p>
-      <pre><code>// User signup
-app.post('/signup', async (req, res) => {
-  try {
-    const user = await client.users.create({
-      email: req.body.email,
-      password: req.body.password
-    });
-    res.json({ userId: user.id });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-});
-
-// User login
-app.post('/login', async (req, res) => {
-  try {
-    const token = await client.auth.login({
-      email: req.body.email,
-      password: req.body.password
-    });
-    res.json({ token });
-  } catch (error) {
-    res.status(401).json({ error: error.message });
-  }
-});</code></pre>
-    </div>
-  `,
-  
-  'advanced-tutorials': `
-    <h1 class="doc-title">Advanced Tutorials</h1>
-    <div class="doc-content">
-      <p>In-depth guides for experienced developers.</p>
-      
-      <h3 id="advanced-custom-integrations">Custom Integrations</h3>
-      <p>Learn how to build custom integrations with third-party services:</p>
-      <pre><code>// Example: Integrating with a payment processor}</code></pre>
-      
-      <h3 id="advanced-scaling">Scaling Your Application</h3>
-      <p>Best practices for scaling your application:</p>
-      <ul>
-        <li>Implement caching for frequently accessed data</li>
-        <li>Use connection pooling for database connections</li>
-        <li>Set up proper error handling and retry logic</li>
-        <li>Implement rate limiting and circuit breakers</li>
-      </ul>
-      <pre><code>// Example: Implementing a cache layer
-const Redis = require('ioredis');
-const redis = new Redis();
-
-async function getCachedData(key, fetchFn, ttl = 3600) {
-  // Try to get from cache first
-  const cached = await redis.get(key);
-  if (cached) {
-    return JSON.parse(cached);
-  }
-  
-  // If not in cache, fetch fresh data
-  const data = await fetchFn();
-  
-  // Store in cache for future requests
-  await redis.set(key, JSON.stringify(data), 'EX', ttl);
-  
-  return data;
-}
-
-// Usage
-app.get('/api/products', async (req, res) => {
-  try {
-    const products = await getCachedData(
-      'products_list',
-      () => client.products.list(),
-      1800 // 30 minutes cache
-    );
-    res.json(products);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});</code></pre>
-    </div>
+            <table>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Servus</th>
+                  <th>equum</th>
+                  <th>videt</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>Satzglied</th>
+                  <td>Subjekt</td>
+                  <td>(Akkusativ)Objekt</td>
+                  <td>Prädikat</td>
+                </tr>
+                <tr>
+                  <th>Wortart</th>
+                  <td>Substantiv</td>
+                  <td>Substantiv</td>
+                  <td>Verb</td>
+                </tr>
+                <tr>
+                  <th>Form</th>
+                  <td>Nominativ<br />Singular<br />Maskulinum</td>
+                  <td>Akkusativ<br />Singular<br />Maskulinum</td>
+                  <td>3. Person<br />Singular<br />Präsens</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
   `
+    
 };
 
 // Endpoints
