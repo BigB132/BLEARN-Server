@@ -317,7 +317,7 @@ const documentationData = {
       name: 'Latein',
       subcategories: [
         {
-          id: 'l1',
+          id: 'L1',
           name: 'Einführung',
           chapters: [
             { id: 'l1.1', name: 'Satzglieder, Wortarten, Formen' },
