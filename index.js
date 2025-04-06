@@ -8,7 +8,8 @@ const Modules = require("./moduleDataModel");
 require('./docsCode.js');
 
 
-const {dbURI} = require("./config.json")
+const {dbURI} = require("./config.json");
+const moduleDataModel = require("./moduleDataModel");
 
 const app = express();
 
@@ -27,7 +28,7 @@ app.options("*", cors(corsOptions));
 
 app.use(express.json()); // JSON Body Parser
 
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(dbURI)
     .then(() => console.log("Datenbank verbunden"))
     .catch(err => console.log("Fehler bei der Datenbankverbindung", err));
 
@@ -696,6 +697,41 @@ app.get('/api/documentation/search', (req, res) => {
   
   res.json(results);
 });
+
+app.post('/api/fetchProjects', async (req, res) => {
+  const { email, token } = req.body;
+  const user = await User.findOne({email, token});
+  if (!user) return res.status(404).json({ error: 'User not found' });
+
+  let outputArray = [];
+  let names = [];
+  
+  // Verwende eine for...of Schleife, um auf asynchrone Operationen zu warten
+  for (let index = 0; index < user.modules.length; index++) {
+    const item = user.modules[index];
+    const time = user.moduleTimes[index];
+    
+    if (time < Date.now()) {
+      // Entfernen der Elemente nach der Schleife
+      user.modules.splice(index, 1);
+      user.moduleTimes.splice(index, 1);
+      index--; // Verhindert Überspringen des nächsten Elements
+    } else {
+      if (outputArray.includes(item)) continue; // Verhindert doppelte Module
+      outputArray.push(item);
+      
+      const moduleData = await moduleDataModel.findOne({ id: item });
+      if (moduleData) {
+        names.push(moduleData.name);
+      }
+    }
+  }
+  
+  // Speichern nach der Schleife
+  await user.save();
+  res.json({ output: outputArray, names: names });
+});
+
 
 app.listen(3000, () => {
     console.log(`Server läuft auf Port ${3000}`);
