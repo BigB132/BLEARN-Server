@@ -371,7 +371,7 @@ const contentData = {
     </div>
   `,
   
-  'l1': `
+  'L1': `
       <h1 class="doc-title">Einführung</h1>
           <div class="doc-content">
             <h3 id="l1.1">
@@ -619,9 +619,6 @@ app.get('/api/documentation/content/:sectionId/:email/:token', async (req, res) 
   }
 
   const index = user.modules.indexOf(sectionId);
-
-  console.log(user.modules)
-  console.log(user);
 
   if(user.moduleTimes[index] > Date.now() || !user){
     if (contentData[sectionId]) {
