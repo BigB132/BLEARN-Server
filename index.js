@@ -614,7 +614,14 @@ app.get('/api/documentation/content/:sectionId/:email/:token', async (req, res) 
 
   const user = await User.findOne({email: email, token: token, modules: sectionId});
 
+  if(!user){
+    return;
+  }
+
   const index = user.modules.indexOf(sectionId);
+
+  console.log(user.modules)
+  console.log(user);
 
   if(user.moduleTimes[index] > Date.now() || !user){
     if (contentData[sectionId]) {
