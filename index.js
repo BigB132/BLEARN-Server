@@ -6,6 +6,7 @@ const { dbURI } = require('./config/database');
 const authRoutes = require('./routes/auth');
 const shopRoutes = require('./routes/shop');
 const documentationRoutes = require('./routes/documentation');
+const moduleContent = require('./routes/moduleContent');
 
 const app = express();
 
@@ -28,6 +29,7 @@ mongoose.connect(dbURI)
 app.use('/api/auth', authRoutes);
 app.use('/api', shopRoutes);
 app.use('/api/documentation', documentationRoutes);
+app.use('/api/modules', moduleContent)
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
