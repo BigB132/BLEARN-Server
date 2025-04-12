@@ -37,6 +37,39 @@ const tabellen = {
                 PlAbF: "his",
                 PlAbN: "his"}
         `
+        },
+        {
+            id: '0002',
+            module: 'L1',
+            htmlTable: `
+            <h1>Formen der 3. Person Singular Präsens konjugieren</h1>
+    <p>
+      Fülle die Tabelle mit den Wörtern "rogare", "videre", "audire" und "quaerere".
+    </p>
+    <table>
+      <tbody>
+        <tr>
+          <th></th>
+          <th>a-Konj.</th>
+          <th>e-Konj.</th>
+          <th>i-Konj.</th>
+          <th>kons.-Konj.</th>
+        </tr>
+        <tr>
+          <th>3. Person Singular Präsens</th>
+          <td><input type="text" id="1" /></td>
+          <td><input type="text" id="2" /></td>
+          <td><input type="text" id="3" /></td>
+          <td><input type="text" id="4" /></td>
+        </tr>
+      </tbody>
+    </table>`,
+            solutions: `
+                {1: "rogat",
+                2: "videt",
+                3: "audit",
+                4: "quaerit"}
+        `
         }
     ]
 };
