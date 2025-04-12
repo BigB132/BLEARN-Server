@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const Module = require('../models/Module');
+const mainModuleData = require('../data/mainModuleData');
 
 const earnCoinsPage = async (req, res) => {
     try {
@@ -194,7 +195,8 @@ const fetchProjects = async (req, res) => {
                 index--; // Prevent skipping the next element
             } else {
                 if (outputArray.includes(item)) continue; // Prevent duplicate modules
-                outputArray.push(item);
+                const item3 = mainModuleData.data.find(item2 => item2.module === item);
+                outputArray.push(item3.id);
                 
                 const moduleData = await Module.findOne({ id: item });
                 if (moduleData) {
