@@ -22,7 +22,7 @@ const getSectionContent = async (req, res) => {
             if (contentData[sectionId]) {
                 res.json({ content: contentData[sectionId] });
             } else {
-                res.status(404).json({ error: 'Content not found' });
+                res.json({ content: 'Content not found' });
             }
         } else {
             res.json({ content: '001' });
