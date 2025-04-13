@@ -136,7 +136,72 @@ const buyModule = async (req, res) => {
         const coins = user.coins;
 
         if (price > coins) {
-            return res.json({ msg: "NEC" });s
+            return res.send(
+                `
+                    <!DOCTYPE html>
+                    <html lang="de">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Belohnung nicht verfügbar</title>
+                        <style>
+                            body {
+                                margin: 0;
+                                font-family: Arial, sans-serif;
+                                background-color: #181818;
+                                color: white;
+                                text-align: center;
+                            }
+                            .header {
+                                padding: 50px 20px;
+                            }
+                            .header h1 {
+                                font-size: 48px;
+                                margin-bottom: 10px;
+                            }
+                            .header p {
+                                font-size: 20px;
+                                max-width: 800px;
+                                margin: 0 auto;
+                            }
+                            .warning {
+                                margin-top: 40px;
+                                font-size: 22px;
+                                color: #ff5e5e;
+                            }
+                            .btn-container {
+                                margin-top: 30px;
+                            }
+                            .btn {
+                                display: inline-block;
+                                padding: 12px 24px;
+                                font-size: 18px;
+                                color: white;
+                                text-decoration: none;
+                                background-color: #c200cc;
+                                border-radius: 8px;
+                                transition: background 0.3s, box-shadow 0.3s;
+                                cursor: pointer;
+                                border: none;
+                            }
+                            .btn:hover {
+                                background: #a000aa;
+                                box-shadow: 0 0 15px #c200cc;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="header">
+                            <h1>BLEARN</h1>
+                            <p>Du hast nicht genug Coins, um diesen Inhalt freizuschalten.</p>
+                        </div>
+                        <div class="btn-container">
+                            <a class="btn" href="https://blearn.netlify.app/earncoins">Coins sammeln</a>
+                        </div>
+                        <p class="warning">Sammle mehr Coins, um diesen Inhalt freischalten zu können.</p>
+                    </body>
+                    </html>`
+            );
         } else {
             // Calculate access time based on pack
             let accessTime;
@@ -194,8 +259,8 @@ const fetchProjects = async (req, res) => {
                 user.moduleTimes.splice(index, 1);
                 index--; // Prevent skipping the next element
             } else {
-                if (outputArray.includes(item)) continue; // Prevent duplicate modules
                 const item3 = mainModuleData.data.find(item2 => item2.module === item);
+                if (outputArray.includes(item3)) continue; // Prevent duplicate modules
                 outputArray.push(item3.id);
                 
                 const moduleData = await Module.findOne({ id: item });
