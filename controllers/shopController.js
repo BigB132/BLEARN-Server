@@ -260,7 +260,8 @@ const fetchProjects = async (req, res) => {
                 index--; // Prevent skipping the next element
             } else {
                 const item3 = mainModuleData.data.find(item2 => item2.module === item);
-                if (outputArray.includes(item3)) continue; // Prevent duplicate modules
+                
+                if (outputArray.includes(item3.id)) continue; // Prevent duplicate modules
                 outputArray.push(item3.id);
                 
                 const moduleData = await Module.findOne({ id: item });
