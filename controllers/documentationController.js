@@ -25,7 +25,7 @@ const getSectionContent = async (req, res) => {
                 res.status(404).json({ error: 'Content not found' });
             }
         } else {
-            res.status(404).json({ error: '001' });
+            res.json({ content: '001' });
         }
     } catch (error) {
         console.error("Error getting section content:", error);
