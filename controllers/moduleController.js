@@ -26,6 +26,7 @@ const tabellen = (req, res) => {
 const lueckentexte = (req, res) => {
     const {id, token, email} = req.body;
     const array = lueckentextData.ids.find(item => item.id === id);
+    if(!array) return;
     const user = User.findOne({email, token, modules: array.module});
 
     if(!user) return;
